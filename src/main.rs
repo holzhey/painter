@@ -1,7 +1,7 @@
 use std::time::Duration;
 
 use minifb::{Key, Window, WindowOptions};
-use painter::{Point, Screen};
+use painter::{ColorRGB, Pixel, Position, Screen};
 
 pub mod painter;
 
@@ -23,7 +23,9 @@ fn main() {
     while window.is_open() && !window.is_key_down(Key::Escape) {
         for y in 0..HEIGHT {
             for x in 0..WIDTH {
-                screen.plot(Point::new(x, y), color);
+                let color_rgb = ColorRGB::new(1, 1, color);
+                let pixel = Pixel::new(Position::new(x, y), &color_rgb);
+                screen.plot(&pixel);
             }
             color = color.checked_add(1).unwrap();
         }
