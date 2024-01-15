@@ -24,10 +24,42 @@ impl Screen {
     }
 
     pub fn fill(&mut self, top_left: &Position, bottom_right: &Position, color: &Color) {
-        // TODO: Improve performance by filling slices
         for y in top_left.y..bottom_right.y {
             for x in top_left.x..bottom_right.x {
                 self.plot_coordinates(x, y, color.get_color_value())
+            }
+        }
+    }
+
+    pub fn line(&mut self, p1: &Position, p2: &Position, color: &Color) {
+        let mut x0 = p1.x as i32;
+        let mut y0 = p1.y as i32;
+        let x1 = p2.x as i32;
+        let y1 = p2.y as i32;
+        let dx = x1.abs_diff(x0) as i32;
+        let sx: i32 = if x0 < x1 { 1 } else { -1 };
+        let dy = -(y1.abs_diff(y0) as i32);
+        let sy: i32 = if y0 < y1 { 1 } else { -1 };
+        let mut err = dx + dy;
+        loop {
+            self.plot_coordinates(x0 as usize, y0 as usize, color.get_color_value());
+            if x0 == x1 && y0 == y1 {
+                break;
+            }
+            let e2 = 2 * err;
+            if e2 >= dy {
+                if x0 == x1 {
+                    break;
+                }
+                err += dy;
+                x0 += sx;
+            }
+            if e2 <= dx {
+                if y0 == y1 {
+                    break;
+                }
+                err += dx;
+                y0 += sy;
             }
         }
     }
