@@ -115,16 +115,25 @@ mod tests {
         assert_eq!(under_test.get_buffer().iter().find(|&v| *v != 1), None);
     }
 
-    #[test]
-    fn given_line_coordinates_then_buffer_is_modified() {
-        let mut under_test = Screen::new(2, 2);
+    macro_rules! line_tests {
+        ($($name:ident: $value:expr,)*) => {
+        $(
+            #[test]
+            fn $name() {
+                let (p1, p2, color, expected) = $value;
+                let mut under_test = Screen::new(2, 2);
+                under_test.line(&p1, &p2, &color);
+                assert_eq!(under_test.get_buffer().to_owned(), expected);
+            }
+        )*
+        };
+    }
 
-        under_test.line(
-            &Position::new(0, 0),
-            &Position::new(0, 1),
-            &Color::new(0, 0, 1),
-        );
-
-        assert_eq!(under_test.get_buffer().to_owned(), vec![1, 0, 1, 0]);
+    line_tests! {
+        top: (Position::new(0, 0), Position::new(1, 0), Color::new(0, 0, 1), vec![1, 1, 0, 0]),
+        bottom: (Position::new(0, 1), Position::new(1, 1), Color::new(0, 0, 1), vec![0, 0, 1, 1]),
+        left: (Position::new(0, 0), Position::new(0, 1), Color::new(0, 0, 1), vec![1, 0, 1, 0]),
+        right: (Position::new(1, 0), Position::new(1, 1), Color::new(0, 0, 1), vec![0, 1, 0, 1]),
+        diag: (Position::new(0, 0), Position::new(1, 1), Color::new(0, 0, 1), vec![1, 0, 0, 1]),
     }
 }
