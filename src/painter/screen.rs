@@ -94,7 +94,7 @@ mod tests {
     }
 
     #[test]
-    fn given_position_then_buffer_is_modified() {
+    fn given_plot_position_then_buffer_is_modified() {
         let mut under_test = Screen::new(WIDTH, HEIGHT);
         let pixel = Pixel::new(Position::new(1, 0), Color::new(1, 2, 3));
 
@@ -113,5 +113,18 @@ mod tests {
         under_test.fill(&top_left, &bottom_right, &color);
 
         assert_eq!(under_test.get_buffer().iter().find(|&v| *v != 1), None);
+    }
+
+    #[test]
+    fn given_line_coordinates_then_buffer_is_modified() {
+        let mut under_test = Screen::new(2, 2);
+
+        under_test.line(
+            &Position::new(0, 0),
+            &Position::new(0, 1),
+            &Color::new(0, 0, 1),
+        );
+
+        assert_eq!(under_test.get_buffer().to_owned(), vec![1, 0, 1, 0]);
     }
 }
