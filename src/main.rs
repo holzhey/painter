@@ -22,6 +22,7 @@ fn main() {
         screen.fill(&p1, &p2, &color);
         draw_triangle(angle, &mut screen);
         angle += 1;
+        screen.circle(&Position::new(320, 180), 60_f64, &Color::new(50, 60, 150));
         color_index = color_index.checked_add(1).unwrap_or(1);
         window
             .update_with_buffer(screen.get_buffer(), WIDTH, HEIGHT)

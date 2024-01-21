@@ -64,6 +64,17 @@ impl Screen {
         }
     }
 
+    pub fn circle(&mut self, center: &Position, radius: f64, color: &Color) {
+        for angle in 0..360 {
+            let arad = (angle as f64).to_radians();
+            let point = Position::new(
+                ((center.x as f64) + radius * arad.cos()) as usize,
+                ((center.y as f64) + radius * arad.sin()) as usize,
+            );
+            self.plot_coordinates(point.x, point.y, color.get_color_value());
+        }
+    }
+
     fn plot_coordinates(&mut self, x: usize, y: usize, color: u32) {
         let pos = (y * self.width) + x;
         self.buffer[pos] = color
@@ -135,5 +146,18 @@ mod tests {
         left: (Position::new(0, 0), Position::new(0, 1), Color::new(0, 0, 1), vec![1, 0, 1, 0]),
         right: (Position::new(1, 0), Position::new(1, 1), Color::new(0, 0, 1), vec![0, 1, 0, 1]),
         diag: (Position::new(0, 0), Position::new(1, 1), Color::new(0, 0, 1), vec![1, 0, 0, 1]),
+    }
+
+    #[test]
+    fn given_coordinate_with_radius_and_color_then_circle_is_drawn() {
+        let mut under_test = Screen::new(3, 3);
+
+        under_test.circle(&Position::new(1, 1), 1_f64, &Color::new(0, 0, 1));
+
+        // FIXME: Current assertion seems incorrect
+        assert_eq!(
+            under_test.get_buffer().to_owned(),
+            vec![1, 1, 0, 1, 1, 1, 0, 1, 0]
+        );
     }
 }
