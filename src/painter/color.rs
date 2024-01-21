@@ -26,4 +26,26 @@ mod tests {
 
         assert_eq!(under_test.get_color_value(), 66051);
     }
+
+    macro_rules! color_tests {
+        ($($name:ident: $value:expr,)*) => {
+        $(
+            #[test]
+            fn $name() {
+                let (r, g, b, expected) = $value;
+                let under_test = Color::new(r, g, b);
+                assert_eq!(under_test.get_color_value(), expected)
+           }
+        )*
+        };
+    }
+
+    color_tests! {
+         blue_color: (0,0,1,1),
+         red_color: (1,0,0,65536),
+         green_color: (0,1,0,256),
+         all_rgb: (1,2,3,66051),
+         min_rgb: (0,0,0,0),
+         max_rgb: (255,255,255,16777215),
+    }
 }
