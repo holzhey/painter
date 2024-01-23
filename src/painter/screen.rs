@@ -1,8 +1,8 @@
-use super::{color::Color, pixel::Pixel, position::Position};
+use super::{color::Color, position::Position};
 
 pub struct Screen {
     width: usize,
-    height: usize,
+    _height: usize,
     buffer: Vec<u32>,
 }
 
@@ -10,17 +10,9 @@ impl Screen {
     pub fn new(width: usize, height: usize) -> Self {
         Self {
             width,
-            height,
+            _height: height,
             buffer: vec![0; width * height],
         }
-    }
-
-    pub fn plot(&mut self, pixel: &Pixel) {
-        self.plot_coordinates(
-            pixel.position.x,
-            pixel.position.y,
-            pixel.color.get_color_value(),
-        )
     }
 
     pub fn fill(&mut self, top_left: &Position, bottom_right: &Position, color: &Color) {
@@ -99,19 +91,9 @@ mod tests {
         let under_test = Screen::new(WIDTH, HEIGHT);
 
         assert_eq!(under_test.width, WIDTH);
-        assert_eq!(under_test.height, HEIGHT);
+        assert_eq!(under_test._height, HEIGHT);
         assert_eq!(under_test.get_buffer().len(), WIDTH * HEIGHT);
         assert_eq!(under_test.get_buffer().iter().find(|&v| *v != 0), None);
-    }
-
-    #[test]
-    fn given_plot_position_then_buffer_is_modified() {
-        let mut under_test = Screen::new(WIDTH, HEIGHT);
-        let pixel = Pixel::new(Position::new(1, 0), Color::new(1, 2, 3));
-
-        under_test.plot(&pixel);
-
-        assert_eq!(under_test.get_buffer().get(1), Some(66051).as_ref());
     }
 
     #[test]
