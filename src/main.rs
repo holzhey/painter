@@ -1,7 +1,7 @@
 use std::time::Duration;
 
 use minifb::{Key, Window, WindowOptions};
-use painter::{color::Color, position::Position, screen::Screen};
+use painter::{color::Color, screen::Position, screen::Screen};
 
 pub mod painter;
 

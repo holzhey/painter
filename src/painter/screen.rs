@@ -1,4 +1,4 @@
-use super::{color::Color, position::Position};
+use super::color::Color;
 
 pub struct Screen {
     width: usize,
@@ -77,14 +77,33 @@ impl Screen {
     }
 }
 
+pub struct Position {
+    pub x: usize,
+    pub y: usize,
+}
+
+impl Position {
+    pub fn new(x: usize, y: usize) -> Self {
+        Self { x, y }
+    }
+}
+
 #[cfg(test)]
 mod tests {
-    use crate::painter::{color::Color, position::Position};
+    use crate::painter::color::Color;
 
     use super::*;
 
     const WIDTH: usize = 10;
     const HEIGHT: usize = 10;
+
+    #[test]
+    fn given_coordinates_then_position_is_created() {
+        let under_test = Position::new(1, 2);
+
+        assert_eq!(under_test.x, 1);
+        assert_eq!(under_test.y, 2);
+    }
 
     #[test]
     fn given_dimensions_then_empty_buffer_is_provided() {
