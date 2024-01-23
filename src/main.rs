@@ -4,8 +4,8 @@ use minifb::{Key, Window, WindowOptions};
 use painter::{
     artist::{circle, fill, line},
     color::RGB,
+    screen::Canvas,
     screen::Position,
-    screen::Screen,
 };
 
 pub mod painter;
@@ -14,7 +14,7 @@ const WIDTH: usize = 640;
 const HEIGHT: usize = 360;
 
 fn main() {
-    let mut screen = Screen::new(WIDTH, HEIGHT);
+    let mut screen = Canvas::new(WIDTH, HEIGHT);
 
     let mut window = Window::new("Firework", WIDTH, HEIGHT, WindowOptions::default()).unwrap();
     window.limit_update_rate(Some(Duration::from_micros(16600)));
@@ -40,7 +40,7 @@ fn main() {
     }
 }
 
-fn draw_triangle(angle: usize, screen: &mut Screen) {
+fn draw_triangle(angle: usize, screen: &mut Canvas) {
     let p1 = get_coordinates(angle);
     let p2 = get_coordinates(angle + 120);
     let p3 = get_coordinates(angle + 240);

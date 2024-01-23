@@ -1,9 +1,9 @@
 use super::{
     color::RGB,
-    screen::{Position, Screen},
+    screen::{Canvas, Position},
 };
 
-pub fn fill(screen: &mut Screen, top_left: &Position, bottom_right: &Position, color: &RGB) {
+pub fn fill(screen: &mut Canvas, top_left: &Position, bottom_right: &Position, color: &RGB) {
     for y in top_left.y..bottom_right.y {
         for x in top_left.x..bottom_right.x {
             screen.plot_coordinates(x, y, color.get_color_value())
@@ -11,7 +11,7 @@ pub fn fill(screen: &mut Screen, top_left: &Position, bottom_right: &Position, c
     }
 }
 
-pub fn line(screen: &mut Screen, p1: &Position, p2: &Position, color: &RGB) {
+pub fn line(screen: &mut Canvas, p1: &Position, p2: &Position, color: &RGB) {
     let mut x0 = p1.x as i32;
     let mut y0 = p1.y as i32;
     let x1 = p2.x as i32;
@@ -44,7 +44,7 @@ pub fn line(screen: &mut Screen, p1: &Position, p2: &Position, color: &RGB) {
     }
 }
 
-pub fn circle(screen: &mut Screen, center: &Position, radius: f64, color: &RGB) {
+pub fn circle(screen: &mut Canvas, center: &Position, radius: f64, color: &RGB) {
     for angle in 0..360 {
         let arad = (angle as f64).to_radians();
         let point = Position::new(
@@ -66,7 +66,7 @@ mod tests {
 
     #[test]
     fn given_coordinates_with_color_then_region_is_filled() {
-        let mut screen = Screen::new(WIDTH, HEIGHT);
+        let mut screen = Canvas::new(WIDTH, HEIGHT);
         let top_left = Position::new(0, 0);
         let bottom_right = Position::new(WIDTH, HEIGHT);
         let color = RGB::new(0, 0, 1);
@@ -82,7 +82,7 @@ mod tests {
             #[test]
             fn $name() {
                 let (p1, p2, color, expected) = $value;
-                let mut screen = Screen::new(2, 2);
+                let mut screen = Canvas::new(2, 2);
                 line(&mut screen, &p1, &p2, &color);
                 assert_eq!(screen.get_buffer().to_owned(), expected);
             }
@@ -100,7 +100,7 @@ mod tests {
 
     #[test]
     fn given_coordinate_with_radius_and_color_then_circle_is_drawn() {
-        let mut screen = Screen::new(3, 3);
+        let mut screen = Canvas::new(3, 3);
 
         circle(&mut screen, &Position::new(1, 1), 1_f64, &RGB::new(0, 0, 1));
 

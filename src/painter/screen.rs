@@ -1,10 +1,10 @@
-pub struct Screen {
+pub struct Canvas {
     width: usize,
     _height: usize,
     buffer: Vec<u32>,
 }
 
-impl Screen {
+impl Canvas {
     pub fn new(width: usize, height: usize) -> Self {
         Self {
             width,
@@ -51,7 +51,7 @@ mod tests {
 
     #[test]
     fn given_dimensions_then_empty_buffer_is_provided() {
-        let under_test = Screen::new(WIDTH, HEIGHT);
+        let under_test = Canvas::new(WIDTH, HEIGHT);
 
         assert_eq!(under_test.width, WIDTH);
         assert_eq!(under_test._height, HEIGHT);
