@@ -3,7 +3,7 @@ use std::time::Duration;
 use minifb::{Key, Window, WindowOptions};
 use painter::{
     artist::{circle, fill, line},
-    color::Color,
+    color::RGB,
     screen::Position,
     screen::Screen,
 };
@@ -23,7 +23,7 @@ fn main() {
     let p2 = Position::new(WIDTH, HEIGHT);
     let mut angle = 0;
     while window.is_open() && !window.is_key_down(Key::Escape) {
-        let color = Color::new(1, 1, color_index);
+        let color = RGB::new(1, 1, color_index);
         fill(&mut screen, &p1, &p2, &color);
         draw_triangle(angle, &mut screen);
         angle += 1;
@@ -31,7 +31,7 @@ fn main() {
             &mut screen,
             &Position::new(320, 180),
             60_f64,
-            &Color::new(50, 60, 150),
+            &RGB::new(50, 60, 150),
         );
         color_index = color_index.checked_add(1).unwrap_or(1);
         window
@@ -44,7 +44,7 @@ fn draw_triangle(angle: usize, screen: &mut Screen) {
     let p1 = get_coordinates(angle);
     let p2 = get_coordinates(angle + 120);
     let p3 = get_coordinates(angle + 240);
-    let white = Color::new(255, 255, 255);
+    let white = RGB::new(255, 255, 255);
     line(screen, &p1, &p2, &white);
     line(screen, &p2, &p3, &white);
     line(screen, &p3, &p1, &white);
