@@ -1,6 +1,6 @@
 pub struct Canvas {
     width: usize,
-    _height: usize,
+    height: usize,
     buffer: Vec<u32>,
 }
 
@@ -8,7 +8,7 @@ impl Canvas {
     pub fn new(width: usize, height: usize) -> Self {
         Self {
             width,
-            _height: height,
+            height,
             buffer: vec![0; width * height],
         }
     }
@@ -16,6 +16,14 @@ impl Canvas {
     pub fn plot(&mut self, x: usize, y: usize, color: u32) {
         let pos = (y * self.width) + x;
         self.buffer[pos] = color
+    }
+
+    pub fn scroll(&mut self, ix: usize, iy: usize) {
+        // TODO: support for Y displacement
+        // TODO: improve algo
+        for line in self.buffer.chunks_mut(self.width) {
+            line.copy_within(2..line.len(), 1);
+        }
     }
 
     pub fn get_buffer(&self) -> &Vec<u32> {

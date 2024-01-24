@@ -38,6 +38,12 @@ fn main() {
             .update_with_buffer(screen.get_buffer(), WIDTH, HEIGHT)
             .unwrap();
     }
+    for _ in 0..WIDTH {
+        screen.scroll(1, 1);
+        window
+            .update_with_buffer(screen.get_buffer(), WIDTH, HEIGHT)
+            .unwrap();
+    }
 }
 
 fn draw_triangle(angle: usize, screen: &mut Canvas) {
