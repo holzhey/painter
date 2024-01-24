@@ -13,7 +13,7 @@ impl Canvas {
         }
     }
 
-    pub fn plot_coordinates(&mut self, x: usize, y: usize, color: u32) {
+    pub fn plot(&mut self, x: usize, y: usize, color: u32) {
         let pos = (y * self.width) + x;
         self.buffer[pos] = color
     }
