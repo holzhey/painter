@@ -18,7 +18,7 @@ impl Color {
 
 pub struct Canvas {
     width: usize,
-    height: usize,
+    _height: usize,
     buffer: Vec<u32>,
 }
 
@@ -26,7 +26,7 @@ impl Canvas {
     pub fn new(width: usize, height: usize) -> Self {
         Self {
             width,
-            height,
+            _height: height,
             buffer: vec![0; width * height],
         }
     }
@@ -36,7 +36,7 @@ impl Canvas {
         self.buffer[pos] = color
     }
 
-    pub fn scroll(&mut self, ix: usize, iy: usize) {
+    pub fn scroll(&mut self, _ix: usize, _iy: usize) {
         // TODO: support for Y displacement
         // TODO: improve algo
         for line in self.buffer.chunks_mut(self.width) {
@@ -80,7 +80,7 @@ mod tests {
         let under_test = Canvas::new(WIDTH, HEIGHT);
 
         assert_eq!(under_test.width, WIDTH);
-        assert_eq!(under_test.height, HEIGHT);
+        assert_eq!(under_test._height, HEIGHT);
         assert_eq!(under_test.get_buffer().len(), WIDTH * HEIGHT);
         assert_eq!(under_test.get_buffer().iter().find(|&v| *v != 0), None);
     }
