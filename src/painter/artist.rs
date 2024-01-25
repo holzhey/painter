@@ -1,6 +1,6 @@
-use super::screen::{Canvas, Position, RGB};
+use super::screen::{Canvas, Color, Position};
 
-pub fn fill(screen: &mut Canvas, top_left: &Position, bottom_right: &Position, color: &RGB) {
+pub fn fill(screen: &mut Canvas, top_left: &Position, bottom_right: &Position, color: &Color) {
     for y in top_left.y..bottom_right.y {
         for x in top_left.x..bottom_right.x {
             screen.plot(x, y, color.get_color_value())
@@ -8,7 +8,7 @@ pub fn fill(screen: &mut Canvas, top_left: &Position, bottom_right: &Position, c
     }
 }
 
-pub fn line(screen: &mut Canvas, p1: &Position, p2: &Position, color: &RGB) {
+pub fn line(screen: &mut Canvas, p1: &Position, p2: &Position, color: &Color) {
     let mut x0 = p1.x as i32;
     let mut y0 = p1.y as i32;
     let x1 = p2.x as i32;
@@ -41,7 +41,7 @@ pub fn line(screen: &mut Canvas, p1: &Position, p2: &Position, color: &RGB) {
     }
 }
 
-pub fn circle(screen: &mut Canvas, center: &Position, radius: f64, color: &RGB) {
+pub fn circle(screen: &mut Canvas, center: &Position, radius: f64, color: &Color) {
     for angle in 0..360 {
         let arad = (angle as f64).to_radians();
         let point = Position::new(
@@ -54,7 +54,7 @@ pub fn circle(screen: &mut Canvas, center: &Position, radius: f64, color: &RGB) 
 
 #[cfg(test)]
 mod tests {
-    use crate::painter::screen::RGB;
+    use crate::painter::screen::Color;
 
     use super::*;
 
@@ -66,7 +66,7 @@ mod tests {
         let mut screen = Canvas::new(WIDTH, HEIGHT);
         let top_left = Position::new(0, 0);
         let bottom_right = Position::new(WIDTH, HEIGHT);
-        let color = RGB::new(0, 0, 1);
+        let color = Color::new(0, 0, 1);
 
         fill(&mut screen, &top_left, &bottom_right, &color);
 
@@ -88,18 +88,23 @@ mod tests {
     }
 
     line_tests! {
-        top: (Position::new(0, 0), Position::new(1, 0), RGB::new(0, 0, 1), vec![1, 1, 0, 0]),
-        bottom: (Position::new(0, 1), Position::new(1, 1), RGB::new(0, 0, 1), vec![0, 0, 1, 1]),
-        left: (Position::new(0, 0), Position::new(0, 1), RGB::new(0, 0, 1), vec![1, 0, 1, 0]),
-        right: (Position::new(1, 0), Position::new(1, 1), RGB::new(0, 0, 1), vec![0, 1, 0, 1]),
-        diag: (Position::new(0, 0), Position::new(1, 1), RGB::new(0, 0, 1), vec![1, 0, 0, 1]),
+        top: (Position::new(0, 0), Position::new(1, 0), Color::new(0, 0, 1), vec![1, 1, 0, 0]),
+        bottom: (Position::new(0, 1), Position::new(1, 1), Color::new(0, 0, 1), vec![0, 0, 1, 1]),
+        left: (Position::new(0, 0), Position::new(0, 1), Color::new(0, 0, 1), vec![1, 0, 1, 0]),
+        right: (Position::new(1, 0), Position::new(1, 1), Color::new(0, 0, 1), vec![0, 1, 0, 1]),
+        diag: (Position::new(0, 0), Position::new(1, 1), Color::new(0, 0, 1), vec![1, 0, 0, 1]),
     }
 
     #[test]
     fn given_coordinate_with_radius_and_color_then_circle_is_drawn() {
         let mut screen = Canvas::new(3, 3);
 
-        circle(&mut screen, &Position::new(1, 1), 1_f64, &RGB::new(0, 0, 1));
+        circle(
+            &mut screen,
+            &Position::new(1, 1),
+            1_f64,
+            &Color::new(0, 0, 1),
+        );
 
         // FIXME: Current assertion seems incorrect
         assert_eq!(
