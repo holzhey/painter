@@ -3,9 +3,9 @@ use std::time::Duration;
 use minifb::{Key, Window, WindowOptions};
 use painter::{
     artist::{circle, fill, line},
-    color::RGB,
     screen::Canvas,
     screen::Position,
+    screen::RGB,
 };
 
 pub mod painter;

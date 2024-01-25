@@ -1,7 +1,4 @@
-use super::{
-    color::RGB,
-    screen::{Canvas, Position},
-};
+use super::screen::{Canvas, Position, RGB};
 
 pub fn fill(screen: &mut Canvas, top_left: &Position, bottom_right: &Position, color: &RGB) {
     for y in top_left.y..bottom_right.y {
@@ -57,7 +54,7 @@ pub fn circle(screen: &mut Canvas, center: &Position, radius: f64, color: &RGB) 
 
 #[cfg(test)]
 mod tests {
-    use crate::painter::color::RGB;
+    use crate::painter::screen::RGB;
 
     use super::*;
 
