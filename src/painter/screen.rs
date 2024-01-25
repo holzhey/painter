@@ -5,7 +5,7 @@ pub struct Color {
 }
 
 impl Color {
-    pub fn get_color_value(&self) -> u32 {
+    pub fn get_value(&self) -> u32 {
         ((self.r as u32) << 16) | ((self.g as u32) << 8) | (self.b as u32)
     }
 }
@@ -89,7 +89,7 @@ mod tests {
     fn given_rgb_then_color_is_computed() {
         let under_test = Color::new(1, 2, 3);
 
-        assert_eq!(under_test.get_color_value(), 66051);
+        assert_eq!(under_test.get_value(), 66051);
     }
 
     macro_rules! color_tests {
@@ -99,7 +99,7 @@ mod tests {
             fn $name() {
                 let (r, g, b, expected) = $value;
                 let under_test = Color::new(r, g, b);
-                assert_eq!(under_test.get_color_value(), expected)
+                assert_eq!(under_test.get_value(), expected)
            }
         )*
         };

@@ -3,7 +3,7 @@ use super::screen::{Canvas, Color, Position};
 pub fn fill(screen: &mut Canvas, top_left: &Position, bottom_right: &Position, color: &Color) {
     for y in top_left.y..bottom_right.y {
         for x in top_left.x..bottom_right.x {
-            screen.plot(x, y, color.get_color_value())
+            screen.plot(x, y, color.get_value())
         }
     }
 }
@@ -19,7 +19,7 @@ pub fn line(screen: &mut Canvas, p1: &Position, p2: &Position, color: &Color) {
     let sy: i32 = if y0 < y1 { 1 } else { -1 };
     let mut err = dx + dy;
     loop {
-        screen.plot(x0 as usize, y0 as usize, color.get_color_value());
+        screen.plot(x0 as usize, y0 as usize, color.get_value());
         if x0 == x1 && y0 == y1 {
             break;
         }
@@ -48,7 +48,7 @@ pub fn circle(screen: &mut Canvas, center: &Position, radius: f64, color: &Color
             ((center.x as f64) + radius * arad.cos()) as usize,
             ((center.y as f64) + radius * arad.sin()) as usize,
         );
-        screen.plot(point.x, point.y, color.get_color_value());
+        screen.plot(point.x, point.y, color.get_value());
     }
 }
 
