@@ -38,8 +38,8 @@ fn main() {
             .update_with_buffer(screen.get_buffer(), WIDTH, HEIGHT)
             .unwrap();
     }
-    for _ in 0..WIDTH {
-        screen.scroll(1, 1);
+    for _ in 0..HEIGHT {
+        screen.vscroll(1);
         window
             .update_with_buffer(screen.get_buffer(), WIDTH, HEIGHT)
             .unwrap();
