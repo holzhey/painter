@@ -58,16 +58,17 @@ pub fn circle_segmented(
     radius: f64,
     color: &Color,
     segments: u8,
+    initial_angle: f64,
 ) {
     let inc: f64 = 360_f64 / segments as f64;
-    let mut angle = 0_f64;
+    let mut angle = initial_angle;
     let mut old_pos = create_position(angle, center.x, center.y, radius);
     loop {
         angle += inc;
         let new_pos = create_position(angle, center.x, center.y, radius);
         line(screen, &old_pos, &new_pos, color);
         old_pos = new_pos;
-        if angle > 360_f64 {
+        if angle > initial_angle + 360_f64 {
             break;
         }
     }

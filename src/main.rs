@@ -39,6 +39,7 @@ fn main() {
             100_f64,
             &Color::new(50, 60, 150),
             10,
+            angle as f64,
         );
 
         color_index = color_index.checked_add(1).unwrap_or(1);
