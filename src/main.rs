@@ -2,7 +2,7 @@ use std::time::Duration;
 
 use minifb::{Key, Window, WindowOptions};
 use painter::{
-    artist::{circle, fill, line},
+    artist::{circle, circle_segmented, fill, line},
     screen::Canvas,
     screen::Color,
     screen::Position,
@@ -33,6 +33,14 @@ fn main() {
             60_f64,
             &Color::new(50, 60, 150),
         );
+        circle_segmented(
+            &mut screen,
+            &Position::new(320, 180),
+            100_f64,
+            &Color::new(50, 60, 150),
+            10,
+        );
+
         color_index = color_index.checked_add(1).unwrap_or(1);
         window
             .update_with_buffer(screen.get_buffer(), WIDTH, HEIGHT)
