@@ -35,8 +35,8 @@ fn main() {
         );
         circle_segmented(
             &mut screen,
-            &Position::new(320, 180),
-            100_f64,
+            &get_coordinates(angle),
+            50_f64,
             &Color::new(50, 60, 150),
             10,
             angle as f64,
