@@ -31,7 +31,9 @@ impl Canvas {
 
     pub fn plot(&mut self, x: usize, y: usize, color: u32) {
         let pos = (y * self.width) + x;
-        self.buffer[pos] = color
+        if pos <= (self.width * self.height) {
+            self.buffer[pos] = color
+        }
     }
 
     pub fn hscroll(&mut self, _ix: usize) {
@@ -92,6 +94,13 @@ mod tests {
         let under_test = Color::new(1, 2, 3);
 
         assert_eq!(under_test.get_value(), 66051);
+    }
+
+    #[test]
+    fn given_invalid_coordinates_then_plot_do_not_panic() {
+        let mut under_test = Canvas::new(WIDTH, HEIGHT);
+
+        under_test.plot(WIDTH + 1, HEIGHT, 1);
     }
 
     macro_rules! color_tests {

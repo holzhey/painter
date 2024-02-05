@@ -30,7 +30,7 @@ fn main() {
         circle(
             &mut screen,
             &Position::new(320, 180),
-            60_f64,
+            angle as f64,
             &Color::new(50, 60, 150),
         );
         circle_segmented(
